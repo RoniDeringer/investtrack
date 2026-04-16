@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="InvestTrack favicon">
+  <defs>
+    <linearGradient id="it-stroke" x1="48" y1="48" x2="208" y2="208" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4de1c1"/>
+      <stop offset="1" stop-color="#6aa7ff"/>
+    </linearGradient>
+    <linearGradient id="it-fill" x1="56" y1="44" x2="200" y2="212" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0f1629"/>
+      <stop offset="1" stop-color="#0b0f1a"/>
+    </linearGradient>
+  </defs>
+
+  <path
+    d="M88 32h80l56 56v80l-56 56H88l-56-56V88l56-56Z"
+    fill="url(#it-fill)"
+    stroke="url(#it-stroke)"
+    stroke-width="10"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M72 168 C 106 156, 124 142, 140 124 C 154 108, 172 92, 194 78"
+    fill="none"
+    stroke="rgba(255,255,255,0.92)"
+    stroke-width="18"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M170 80 L 194 78 L 186 104"
+    fill="none"
+    stroke="rgba(255,255,255,0.92)"
+    stroke-width="18"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>

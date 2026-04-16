@@ -2,6 +2,5 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('app');
-});
+// SPA entry (Vue). Any non-API route should return the same app shell.
+Route::view('/{any?}', 'app')->where('any', '.*');

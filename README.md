@@ -1,66 +1,92 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📈 InvestTrack — gestão de investimentos
+
+Sistema de gestão de portfólio de investimentos com **operações**, **preço médio**, **dividendos** e **métricas de performance**.
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="public/favicon.svg" width="110" alt="InvestTrack icon" />
 </p>
 
-## About Laravel
+<p align="center">
+  <img alt="Laravel" src="https://img.shields.io/badge/Laravel-11-FF2D20?logo=laravel&logoColor=white" />
+  <img alt="PHP" src="https://img.shields.io/badge/PHP-8.3-777BB4?logo=php&logoColor=white" />
+  <img alt="Vue" src="https://img.shields.io/badge/Vue-3-4FC08D?logo=vue.js&logoColor=white" />
+  <img alt="Vite" src="https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white" />
+  <img alt="PostgreSQL" src="https://img.shields.io/badge/PostgreSQL-16-4169E1?logo=postgresql&logoColor=white" />
+  <img alt="Redis" src="https://img.shields.io/badge/Redis-7-DC382D?logo=redis&logoColor=white" />
+  <img alt="Docker" src="https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white" />
+</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🧰 Tecnologias / Ferramentas
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- 🧠 **Backend**: Laravel 11 (PHP 8.3)
+- 🎛️ **Banco de dados**: PostgreSQL 16 (Docker)
+- ⚡ **Cache / Sessão / Filas**: Redis 7 (driver `phpredis`)
+- 🖥️ **Frontend**: Vue 3 + Pinia + Vue Router + Vite
+- 🐳 **Infra (dev)**: Docker Compose (containers: `app`, `nginx`, `postgres`, `redis`, `node`, `queue`)
+- 🧪 **Testes**: PHPUnit (via `php artisan test`)
+- 🤖 **CI**: GitHub Actions (build do frontend + testes)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🧠 Conceitos do domínio
 
-## Learning Laravel
+- 📦 **Portfolio**: carteira do usuário (múltiplas carteiras por usuário).
+- 🏷️ **Asset**: ativo financeiro (ações, FIIs, cripto, etc).
+- 🧾 **Operation**: compra/venda (base para preço médio e lucro/prejuízo).
+- 💸 **Dividend**: provento por ativo.
+- 🧮 **DividendReceipt**: provento recebido pelo usuário/carteira.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 📜 Regras de negócio (resumo)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 🧾 Operações
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- 🚫 **Venda limitada**: o usuário não pode vender mais do que possui.
+- 🧮 **Preço médio**:
+  - recalcula **somente em compras**
+  - fórmula: `((qtd_atual × pm_atual) + (qtd_compra × preco_compra)) / nova_qtd`
+- 🧊 **Venda não altera preço médio**: apenas reduz a quantidade.
+- ✅ **Lucro realizado**: `(preco_venda - preco_medio) × quantidade_vendida`.
+- 📈 **Lucro não realizado**: `(preco_atual - preco_medio) × quantidade`.
 
-## Laravel Sponsors
+### 💸 Dividendos
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- 🗓️ O valor recebido considera a **quantidade na data com**:
+  - `valor_por_cota × quantidade_possuida_na_data`
 
-### Premium Partners
+## 🚀 Execução (dev)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Subir tudo (Docker)
 
-## Contributing
+```bash
+docker compose up --build -d
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- App (Nginx): `http://127.0.0.1:8080`
+- Vite (HMR): `http://127.0.0.1:5173`
 
-## Code of Conduct
+### Artisan (sempre dentro do container)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+docker compose exec app php artisan migrate
+docker compose exec app php artisan test
+```
 
-## Security Vulnerabilities
+## 🧪 Testes
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+docker compose exec app php artisan test
+```
 
-## License
+## 🤖 CI/CD (GitHub Actions)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Workflow que roda automaticamente em `push` e `pull_request`:
+
+- 🧱 `npm run build`
+- ✅ `php artisan test`
+
+Arquivo: `.github/workflows/tests.yml`
+
+## 🎨 Ícone / Branding
+
+- Ícone principal (reutilizável): `public/brand/icon.svg`
+- Favicon: `public/favicon.svg`
+- Componente Vue: `resources/js/components/AppIcon.vue`
+

@@ -9,9 +9,7 @@
     <section class="hero">
       <header class="brand">
         <div class="mark" aria-hidden="true">
-          <span class="dot dot-a"></span>
-          <span class="dot dot-b"></span>
-          <span class="dot dot-c"></span>
+          <AppIcon :size="42" />
         </div>
         <div class="brand-text">
           <div class="name">InvestTrack</div>
@@ -30,8 +28,8 @@
       </p>
 
       <div class="cta-row">
-        <a class="btn primary" href="/login">Entrar</a>
-        <a class="btn ghost" href="/register">Criar conta</a>
+        <RouterLink class="btn primary" to="/login">Entrar</RouterLink>
+        <RouterLink class="btn ghost" to="/register">Criar conta</RouterLink>
       </div>
 
       <div class="cards">
@@ -69,5 +67,6 @@
 </template>
 
 <script setup>
+import { RouterLink } from 'vue-router';
+import AppIcon from '../components/AppIcon.vue';
 </script>
-
