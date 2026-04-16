@@ -1,0 +1,76 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - postgres
+      - redis
+    command:
+      [
+        "sh",
+        "-lc",
+        "test -f .env || cp .env.example .env; composer install --no-interaction --no-progress --prefer-dist; if ! grep -q '^APP_KEY=base64:' .env; then php artisan key:generate; fi; php-fpm"
+      ]
+
+  nginx:
+    image: nginx:1.27-alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - app
+
+  node:
+    image: node:20-alpine
+    working_dir: /var/www/html
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./:/var/www/html
+      - node_modules:/var/www/html/node_modules
+    command: ["sh", "-lc", "npm ci && npm run dev -- --host 0.0.0.0 --port 5173"]
+
+  queue:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - postgres
+      - redis
+    command:
+      [
+        "sh",
+        "-lc",
+        "test -f .env || cp .env.example .env; composer install --no-interaction --no-progress --prefer-dist; if ! grep -q '^APP_KEY=base64:' .env; then php artisan key:generate; fi; php artisan queue:work --tries=3 --timeout=90"
+      ]
+
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: investtrack
+      POSTGRES_USER: investtrack
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  postgres_data:
+  redis_data:
+  node_modules:
