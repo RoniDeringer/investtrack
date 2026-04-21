@@ -30,6 +30,7 @@
       <div class="cta-row">
         <RouterLink class="btn primary" to="/login">Entrar</RouterLink>
         <RouterLink class="btn ghost" to="/register">Criar conta</RouterLink>
+        <RouterLink class="btn ghost" to="/carteira">Ver carteira (demo)</RouterLink>
       </div>
 
       <div class="cards">

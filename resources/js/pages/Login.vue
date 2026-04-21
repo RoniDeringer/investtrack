@@ -49,13 +49,21 @@
 <script setup>
 import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
+import { useRouter } from 'vue-router';
 import AppIcon from '../components/AppIcon.vue';
+import { useAuthStore } from '../stores/auth';
 
 const email = ref('');
 const password = ref('');
+const router = useRouter();
+const auth = useAuthStore();
 
-function onSubmit() {
-  // Auth will be wired to the Laravel backend next.
-  alert('Login ainda n\u00e3o est\u00e1 implementado (s\u00f3 UI).');
+async function onSubmit() {
+  try {
+    await auth.login(email.value, password.value);
+    await router.push('/carteira');
+  } catch (e) {
+    alert('E-mail ou senha inválidos.');
+  }
 }
 </script>
