@@ -31,4 +31,8 @@ return [
         ],
     ],
 
+    'b3' => [
+        'base_url' => env('B3_API_BASE_URL', 'https://cotacao.b3.com.br/mds/api/v1'),
+    ],
+
 ];
