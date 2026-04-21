@@ -5,6 +5,7 @@ services:
       dockerfile: docker/php/Dockerfile
     volumes:
       - ./:/var/www/html
+      - vendor:/var/www/html/vendor
     depends_on:
       - postgres
       - redis
@@ -49,6 +50,7 @@ services:
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
+      - vendor:/var/www/html/vendor
     depends_on:
       - postgres
       - redis
@@ -81,3 +83,4 @@ volumes:
   postgres_data:
   redis_data:
   node_modules:
+  vendor:

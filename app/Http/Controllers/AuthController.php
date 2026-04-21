@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -23,11 +23,18 @@ class AuthController extends Controller
             return response()->json(['message' => 'Credenciais inválidas.'], 422);
         }
 
-        $plainToken = Str::random(48);
-        $user->forceFill(['api_token_hash' => hash('sha256', $plainToken)])->save();
+        // Bearer token (Laravel Sanctum)
+        $plainTextToken = $user->createToken('web')->plainTextToken;
+
+        // Optional session (1 day via SESSION_LIFETIME). This only has effect
+        // if the request is using session middleware.
+        if ($request->hasSession()) {
+            Auth::login($user);
+        }
 
         return response()->json([
-            'token' => $plainToken,
+            'token' => $plainTextToken,
+            'expires_at' => now()->addDay()->toIso8601String(),
             'user' => [
                 'id' => $user->id,
                 'name' => $user->name,
@@ -55,10 +62,15 @@ class AuthController extends Controller
         $user = $request->user();
 
         if ($user) {
-            $user->forceFill(['api_token_hash' => null])->save();
+            $request->user()?->currentAccessToken()?->delete();
+        }
+
+        Auth::guard('web')->logout();
+        if ($request->hasSession()) {
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
         }
 
         return response()->json(['ok' => true]);
     }
 }
-
