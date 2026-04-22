@@ -172,6 +172,7 @@ a {
   transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
   user-select: none;
   color: rgba(255, 255, 255, 0.96);
+  cursor: pointer;
 }
 
 .btn:hover {
