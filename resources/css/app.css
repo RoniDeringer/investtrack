@@ -542,6 +542,125 @@ a {
   font-size: 13px;
 }
 
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(4, 7, 14, 0.7);
+  backdrop-filter: blur(12px);
+}
+
+.modal-card {
+  width: min(680px, 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(180deg, rgba(16, 21, 34, 0.98), rgba(9, 13, 23, 0.98));
+  border-radius: 24px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+
+.modal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 18px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 24px;
+  letter-spacing: -0.03em;
+}
+
+.modal-copy {
+  margin: 8px 0 0 0;
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.modal-close {
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.88);
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.modal-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 14px 18px 0;
+}
+
+.modal-tab {
+  min-height: 46px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+}
+
+.modal-tab:hover {
+  transform: translateY(-1px);
+}
+
+.modal-tab.active {
+  color: rgba(255, 255, 255, 0.96);
+  background: linear-gradient(90deg, rgba(77, 225, 193, 0.22), rgba(106, 167, 255, 0.18));
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.modal-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding: 18px;
+}
+
+.modal-total {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 14px 16px;
+}
+
+.modal-total-label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.modal-total-value {
+  font-size: 22px;
+  letter-spacing: -0.03em;
+}
+
+.modal-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
 .table-wrap {
   overflow: auto;
   border-radius: 16px;
@@ -664,8 +783,17 @@ a {
   }
 
   .shortcut-grid,
-  .stats-compact {
+  .stats-compact,
+  .modal-form {
     grid-template-columns: 1fr;
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .modal-actions .btn {
+    width: 100%;
   }
 
   .table {
