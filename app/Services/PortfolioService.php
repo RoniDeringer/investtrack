@@ -4,9 +4,7 @@ namespace App\Services;
 
 class PortfolioService
 {
-    public function __construct(private readonly B3MarketDataClient $b3)
-    {
-    }
+    public function __construct(private readonly B3MarketDataClient $b3) {}
 
     /**
      * Temporary, backend-only example portfolio.
@@ -28,7 +26,7 @@ class PortfolioService
         $example = config('portfolio.example_holdings', []);
 
         $tickers = array_values(array_map(
-            fn (array $row) => (string) ($row['ticker'] ?? ''),
+            fn(array $row) => (string) ($row['ticker'] ?? ''),
             $example
         ));
 
@@ -68,10 +66,12 @@ class PortfolioService
             ];
         }
 
-        usort($holdings, fn (array $a, array $b) => ($b['position_value'] ?? 0) <=> ($a['position_value'] ?? 0));
 
-        $totalPatrimony = array_sum(array_map(fn (array $h) => (float) ($h['position_value'] ?? 0), $holdings));
-        $totalInvested = array_sum(array_map(fn (array $h) => (float) (($h['average_price'] ?? 0) * ($h['quantity'] ?? 0)), $holdings));
+
+        usort($holdings, fn(array $a, array $b) => ($b['position_value'] ?? 0) <=> ($a['position_value'] ?? 0));
+
+        $totalPatrimony = array_sum(array_map(fn(array $h) => (float) ($h['position_value'] ?? 0), $holdings));
+        $totalInvested = array_sum(array_map(fn(array $h) => (float) (($h['average_price'] ?? 0) * ($h['quantity'] ?? 0)), $holdings));
 
         $totalPatrimony = round($totalPatrimony, 2);
         $totalInvested = round($totalInvested, 2);
@@ -111,7 +111,7 @@ class PortfolioService
         }
 
         if (preg_match('/^[A-Z]{4}$/', $ticker) === 1) {
-            return $ticker.'4';
+            return $ticker . '4';
         }
 
         return $ticker;
@@ -122,6 +122,6 @@ class PortfolioService
         $ticker = $this->normalizeTicker($ticker);
 
         // Public logo CDN (same style most dashboards use; close to what Investidor10 shows).
-        return 'https://icons.brapi.dev/icons/'.rawurlencode($ticker).'.svg';
+        return 'https://icons.brapi.dev/icons/' . rawurlencode($ticker) . '.svg';
     }
 }
