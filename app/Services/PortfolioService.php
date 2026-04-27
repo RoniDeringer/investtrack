@@ -66,8 +66,6 @@ class PortfolioService
             ];
         }
 
-
-
         usort($holdings, fn(array $a, array $b) => ($b['position_value'] ?? 0) <=> ($a['position_value'] ?? 0));
 
         $totalPatrimony = array_sum(array_map(fn(array $h) => (float) ($h['position_value'] ?? 0), $holdings));

@@ -19,9 +19,9 @@ class B3MarketDataClient
             $ticker = $this->normalizeTicker($ticker);
 
             $quotes[$ticker] = Cache::remember(
-                'b3.quote.'.$ticker,
+                'b3.quote.' . $ticker,
                 now()->addSeconds(60),
-                fn () => $this->quoteOne($ticker),
+                fn() => $this->quoteOne($ticker),
             );
         }
 
@@ -40,7 +40,7 @@ class B3MarketDataClient
         try {
             $response = Http::acceptJson()
                 ->timeout(10)
-                ->get(rtrim($baseUrl, '/').'/instrumentQuotation/'.$ticker);
+                ->get(rtrim($baseUrl, '/') . '/instrumentQuotation/' . $ticker);
 
             if ($response->successful()) {
                 $payload = $response->json();
@@ -86,7 +86,7 @@ class B3MarketDataClient
 
         // Common user input: "CMIG" -> treat as preferred stock "CMIG4"
         if (preg_match('/^[A-Z]{4}$/', $ticker) === 1) {
-            return $ticker.'4';
+            return $ticker . '4';
         }
 
         return $ticker;
