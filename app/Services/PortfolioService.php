@@ -22,7 +22,6 @@ class PortfolioService
      */
     public function buildExamplePortfolio(): array
     {
-        /** @var array<int, array{ticker:string,quantity:int}> $example */
         $example = config('portfolio.example_holdings', []);
 
         $tickers = array_values(array_map(

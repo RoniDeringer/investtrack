@@ -24,7 +24,6 @@ class B3MarketDataClient
                 fn() => $this->quoteOne($ticker),
             );
         }
-
         return $quotes;
     }
 
