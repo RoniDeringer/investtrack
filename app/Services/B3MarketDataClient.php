@@ -51,11 +51,14 @@ class B3MarketDataClient
         $bizOk = is_array($payload) && ($payload['BizSts']['cd'] ?? null) === 'OK';
         $trade = $bizOk && isset($payload['Trad'][0]) && is_array($payload['Trad'][0]) ? $payload['Trad'][0] : null;
 
+
         $security = is_array($trade) ? ($trade['scty'] ?? null) : null;
         $quote = is_array($security) ? ($security['SctyQtn'] ?? null) : null;
 
+
         $symbol = is_array($security) ? ($security['symb'] ?? $ticker) : $ticker;
         $asOf = is_array($payload) ? ($payload['Msg']['dtTm'] ?? null) : null;
+
 
         $current = is_array($quote) ? $this->toFloat($quote['curPrc'] ?? null) : null;
         $previousClose = is_array($quote) ? $this->toFloat($quote['prvsClsgPric'] ?? null) : null;
