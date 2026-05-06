@@ -36,6 +36,9 @@ class B3MarketDataClient
 
         $payload = null;
 
+
+
+
         try {
             $response = Http::acceptJson()
                 ->timeout(10)
